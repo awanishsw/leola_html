@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="" lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" async="" id="inspsync" src="js/inspectlet.js"></script>
+    <script async="" src="js/analytics.js"></script>
+    <script type="text/javascript" src="js/jquery_003.js"></script>
+    <meta charset="utf-8">
+    <title>Leola / Dueall</title>
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/css.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="css/custom-bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <script src="js/jquery_002.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/jquery.css" type="text/css" media="screen">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+        <!--
+        window.appPath = '';
+        flagShowCloseBtn = true;
+        //-->
+    </script>
+    <!-- jQuery-multipurpose-alertNconfirm-JS -->
+    <link rel="stylesheet" href="css/jquery-confirm.css">
+    <script src="js/jquery-confirm.js"></script>
+    <!-- /jQuery-multipurpose-alertNconfirm-JS -->
+    <script src="js/common.js"></script>
+    <script>
+        appURL = 'https://staging.dlschedule.com/';
+    </script>
+    <script>
+        //window.receiveNoticePopups = true;
+        window.receiveNoticePopups = true;
+    </script>
+    <script>
+        $(function() {
+            $("#datepicker").datepicker();
+            $("#datepicker2").datepicker();
+
+
+
+            /*SelectPicker*/
+
+            /*Reference: http://jsfiddle.net/BB3JK/47/*/
+
+            $('select').each(function() {
+                var $this = $(this),
+                    numberOfOptions = $(this).children('option').length;
+
+                $this.addClass('select-hidden');
+                $this.wrap('<div class="select"></div>');
+                $this.after('<div class="select-styled"></div>');
+
+                var $styledSelect = $this.next('div.select-styled');
+                $styledSelect.text($this.children('option').eq(0).text());
+
+                var $list = $('<ul />', {
+                    'class': 'select-options'
+                }).insertAfter($styledSelect);
+
+                for (var i = 0; i < numberOfOptions; i++) {
+                    $('<li />', {
+                        text: $this.children('option').eq(i).text(),
+                        rel: $this.children('option').eq(i).val()
+                    }).appendTo($list);
+                }
+
+                var $listItems = $list.children('li');
+
+                $styledSelect.click(function(e) {
+                    e.stopPropagation();
+                    $('div.select-styled.active').not(this).each(function() {
+                        $(this).removeClass('active').next('ul.select-options').hide();
+                    });
+                    $(this).toggleClass('active').next('ul.select-options').toggle();
+                });
+
+                $listItems.click(function(e) {
+                    e.stopPropagation();
+                    $styledSelect.text($(this).text()).removeClass('active');
+                    $this.val($(this).attr('rel'));
+                    $list.hide();
+                    //console.log($this.val());
+                });
+
+                $(document).click(function() {
+                    $styledSelect.removeClass('active');
+                    $list.hide();
+                });
+
+            });
+            /*SelectPicker*/
+
+        });
+    </script>
+    <style type="text/css">
+        .fancybox-margin {
+            margin-right: 17px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <div class="wrap">
+            <a href="javascript:void(0);" class="toggle-menu"> <span></span> <span></span> <span></span> </a>
+            <div id="nav">
+                <ul class="pull-left">
+                    <li class="current"><a href="https://staging.dlschedule.com/"><i class="fa fa-dashcube" aria-hidden="true"></i>Dashboard</a></li>
+                    <li><a href="https://staging.dlschedule.com/modules/schedule/weekly.php"><i class="fa fa-calendar" aria-hidden="true"></i> Schedule</a></li>
+                    <li><a href="https://staging.dlschedule.com/modules/workorder/"><i class="fa fa-cubes" aria-hidden="true"></i>My Lots</a></li>
+                    <li><a href="https://staging.dlschedule.com/modules/carry-report/"><i class="fa fa-paste" aria-hidden="true"></i>Carry Report</a></li>
+                    <li><a href="https://staging.dlschedule.com/modules/reports/"><i class="fa fa-flag" aria-hidden="true"></i>Reports</a></li>
+                    <li><a href="https://staging.dlschedule.com/modules/fillorders/"><i class="fa fa-file" aria-hidden="true"></i>Fill Orders</a></li>
+                    <li><a href="https://staging.dlschedule.com/modules/uploadreceipts/"><i class="fa fa-files-o" aria-hidden="true"></i>Upload Receipts</a></li>
+                    <li><a href="https://staging.dlschedule.com/modules/settings/builders.php"><i class="fa fa-cog" aria-hidden="true"></i>Settings</a></li>
+                </ul>
+            </div>
+            <div id="user" class="pull-right">
+                <div id="searchbar">
+                    <form action="https://staging.dlschedule.com/modules/search/" method="post">
+                        <input name="action" value="search" type="hidden">
+                        <span class="input inputHasIcon">
+                            <span class="input">
+                                <input name="search" value="Search..." alt="Search..." class="inputalt input" type="text">
+                            </span>
+                        <span class="inputIcon">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </span>
+                    </form>
+                </div>
+                <ul class="userId">
+                    <li><a href="https://staging.dlschedule.com/modules/notices/"><i class="fa fa-envelope" aria-hidden="true"></i><span class="iconAlert">20</span></a></li>
+                    <li><a href="https://staging.dlschedule.com/modules/settings/"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                    <li><a href="https://staging.dlschedule.com/logout.php"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="spacer"></div>
+    <div id="subheader" class="category-section ">
+        <!--<h1>Schedule</h1>-->
+        <div class="breadcrumbs">
+            <a href="index.php">Home</a>
+            <a class="current">Dashboard</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div id="main">
+        <div class="wrap">
+            <div class="box dashboard">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form id="frmFilter" action="" method="get">
+                                <div class="filterOptions advanced-filter clearfix">
+                                    <div class="filter-part">
+                                        <span class="filterOption ">
+                                        <a id="viewFilterOptions" href="#" class="">
+                                            Advanced Filter Search 
+                                            <span class="fa fa-sort-desc"></span>
+                                        </a>
+                                        </span>
+                                    </div>
+                                    <div class="view-more-calendar">
+                                        <div class="start-date">
+                                            <input type="text" id="datepicker" value="mm/dd/yyyy">
+                                            <i class="fa fa-calendar cal-icon" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="border-calender">-</div>
+                                        <div class="end-date">
+                                            <input type="text" id="datepicker2" value="mm/dd/yyyy">
+                                            <i class="fa fa-calendar cal-icon" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div id="filter_options" class="clearfix" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="">Builder</label>
+                                                    <div class="select-box">
+                                                        <select id="TypeofTruck" class="selectpicker">
+                                                        <option value="">Builder Section 1</option>
+                                                        <option value="">Builder Section 2</option>
+                                                        <option value="">Builder Section 3</option>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="">Super</label>
+                                                    <div class="select-box">
+                                                        <select id="Super" class="selectpicker">
+                                                        <option value="">Super Section 1</option>
+                                                        <option value="">Super Section 2</option>
+                                                        <option value="">Super Section 3</option>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="">Community</label>
+                                                    <div class="select-box">
+                                                        <select id="Community" class="selectpicker">
+                                                        <option value="">Community Section 1</option>
+                                                        <option value="">Community Section 2</option>
+                                                        <option value="">Community Section 3</option>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="">Lot</label>
+                                                    <div class="select-box">
+                                                        <select id="Lot" class="selectpicker">
+                                                        <option value="">Lot Section 1</option>
+                                                        <option value="">Lot Section 2</option>
+                                                        <option value="">Lot Section 3</option>
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label class="">Material</label>
+                                                    <div class="material-box">
+                                                        <input type="text" name="material">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="">Phase</label>
+                                                            <div class="select-box">
+                                                                <select id="Phase" class="selectpicker">
+                                                                    <option value="">Phase Section 1</option>
+                                                                    <option value="">Phase Section 2</option>
+                                                                    <option value="">Phase Section 3</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="">Status</label>
+                                                            <div class="select-box">
+                                                                <select id="Status" class="selectpicker">
+                                                                    <option value="">Status Section 1</option>
+                                                                    <option value="">Status Section 2</option>
+                                                                    <option value="">Status Section 3</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label class="">Reason Code</label>
+                                                            <div class="select-box">
+                                                                <select id="Reason" class="selectpicker">
+                                                                    <option value=""> Section 1</option>
+                                                                    <option value=""> Section 2</option>
+                                                                    <option value=""> Section 3</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group-set">
+                                                <div class="botton-radius">
+                                                    <input type="submit" value="Apply Filter" class="button">
+                                                    <a href="#" onclick="return closeFilterOptions();" class="button-reset">Reset</a>
+                                                    <a href="#" onclick="return saveFilterOptions();" class="button-default">Save as default</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="dashboard-table table-wrap-scroll">
+
+                                <table class="tbl_schedule_day" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-center">Date <a href="javascript:void(0)">&nbsp;</a></th>
+                                            <th class="text-left">Builder <a href="javascript:void(0)">&nbsp;</a></th>
+                                            <th class="text-left">Super <a href="javascript:void(0)">&nbsp;</a></th>
+                                            <th class="text-left">Community <a href="javascript:void(0)">&nbsp;</a></th>
+                                            <th class="text-left">Lots <a href="javascript:void(0)">&nbsp;</a></th>
+                                            <th class="text-left"> Phase <a href="javascript:void(0)">&nbsp;</a></th>
+                                            <th class="text-left">Note</th>
+                                            <th class="text-left">Status <a href="javascript:void(0)">&nbsp;</a></th>
+                                            <th class="text-left">Material</th>
+                                            <th class="text-left">Reason Code</th>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">05/15/18</td>
+                                            <td class="text-left">Mattamy</td>
+                                            <td class="text-left">Tony Kail</td>
+                                            <td class="text-left">Mat-Boyette Park 50'</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">05/15/18</td>
+                                            <td class="text-left">Mattamy</td>
+                                            <td class="text-left">Tony Kail</td>
+                                            <td class="text-left">Mat-Boyette Park 50'</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">05/15/18</td>
+                                            <td class="text-left">Mattamy</td>
+                                            <td class="text-left">Tony Kail</td>
+                                            <td class="text-left">Mat-Boyette Park 50'</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">05/15/18</td>
+                                            <td class="text-left">Mattamy</td>
+                                            <td class="text-left">Tony Kail</td>
+                                            <td class="text-left">Mat-Boyette Park 50'</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">05/15/18</td>
+                                            <td class="text-left">Mattamy</td>
+                                            <td class="text-left">Tony Kail</td>
+                                            <td class="text-left">Mat-Boyette Park 50'</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">05/15/18</td>
+                                            <td class="text-left">Mattamy</td>
+                                            <td class="text-left">Tony Kail</td>
+                                            <td class="text-left">Mat-Boyette Park 50'</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">05/15/18</td>
+                                            <td class="text-left">Mattamy</td>
+                                            <td class="text-left">Tony Kail</td>
+                                            <td class="text-left">Mat-Boyette Park 50'</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                            <td class="text-left">Bldg 52</td>
+                                            <td class="text-left">Slab</td>
+                                            <td class="text-left">120</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="pagination no-radius">
+                                    <a href="#"> Previous</a>
+                                    <a href="#" class="current">1</a>
+                                    <a href="#">2</a>
+                                    <a href="#"> 3</a>
+                                    <span> -- </span>
+                                    <a href="#"> 10</a>
+                                    <a href="#"> Next</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="wrap">
+            <ul>
+                <li><a href="https://staging.dlschedule.com/">Dashboard</a></li>
+                <li><a href="https://staging.dlschedule.com/modules/schedule/">Schedule</a></li>
+                <li><a href="https://staging.dlschedule.com/modules/workorder/">My Lots</a></li>
+                <li><a href="https://staging.dlschedule.com/modules/reports">Reports</a></li>
+                <li><a href="https://staging.dlschedule.com/modules/settings/">Settings</a></li>
+            </ul>
+            <div id="copyright">© Copyright 2018 Leola Construction and Dueall Construction.</div>
+        </div>
+    </div>
+    <a id="fancyboxGeneral" class="fancybox" href="#fancyboxGeneralContent"></a>
+    <div id="fancyboxGeneralContent"></div>
+    <a id="messagePopupLink" class="fancybox" href="#messagePopupContent"></a>
+    <div id="messagePopupContent"></div>
+    <script>
+        $(window).on('load', function() {
+            var topHeader = $("#header").height();
+            var navSection = $("#subheader").height();
+            var footer = $("#footer").height();
+            var windowHeight = $(window).height();
+            var newHeight = windowHeight - (footer + topHeader);
+            $("#main").css("min-height", newHeight);
+            //alert (newHeight);
+        })
+    </script>
+</body>
+
+</html>
